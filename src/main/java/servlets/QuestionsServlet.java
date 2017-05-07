@@ -12,16 +12,16 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "HomePage", urlPatterns = {"/home", "/"})
-public class HomePage extends HttpServlet {
+@WebServlet(name = "QuestionsServlet", urlPatterns = {"/questions"})
+public class QuestionsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         QuestionService questionService = new QuestionService();
         List<Question> questions = questionService.getAll();
         request.setAttribute("questions", questions);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("jsp/questions.jsp").forward(request, response);
     }
 }

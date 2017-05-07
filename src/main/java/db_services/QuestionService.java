@@ -53,17 +53,17 @@ public class QuestionService implements QuestionDAO {
     }
 
     @Override
-    public boolean remove(Question question) {
+    public boolean remove(UUID id) {
         Connection connection = Connector.getConnection();
         PreparedStatement preparedStatement = null;
         String sqlQuestion = "DELETE FROM questions WHERE id = ?";
         String sqlAnswers = "DELETE FROM answers WHERE question_id = ?";
         try {
             preparedStatement = connection.prepareStatement(sqlQuestion);
-            preparedStatement.setString(1, question.getId().toString());
+            preparedStatement.setString(1, id.toString());
             preparedStatement.execute();
             preparedStatement = connection.prepareStatement(sqlAnswers);
-            preparedStatement.setString(1, question.getId().toString());
+            preparedStatement.setString(1, id.toString());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,11 +148,12 @@ public class QuestionService implements QuestionDAO {
         Question question = null;
 
         Connection connection = Connector.getConnection();
-        Statement statement = null;
-        String sql = "SELECT questions.id, text, point, question_type.type FROM questions INNER JOIN question_type ON question_type.id = questions.question_type_id";
+        PreparedStatement preparedStatement = null;
+        String sql = "SELECT questions.id, text, point, question_type.type FROM questions INNER JOIN question_type ON question_type.id = questions.question_type_id WHERE questions.id = ?";
         try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, id.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 question = new Question();
                 question.setId(UUID.fromString(resultSet.getString("id")));
@@ -164,7 +165,7 @@ public class QuestionService implements QuestionDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            Connector.close(connection, statement);
+            Connector.close(connection, preparedStatement);
         }
         return question;
     }
@@ -252,5 +253,25 @@ public class QuestionService implements QuestionDAO {
         return weight;
     }
 
+    @Override
+    public List<String> getAllTypes() {
+        List<String> types = new ArrayList<>();
 
+        Connection connection = Connector.getConnection();
+        Statement statement = null;
+        String sql = "SELECT type FROM question_type";
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                types.add(resultSet.getString("type"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            Connector.close(connection, statement);
+        }
+        return types;
+    }
 }

@@ -23,11 +23,7 @@ public class Connector {
             URL = properties.getProperty("url");
             USERNAME = properties.getProperty("username");
             PASSWORD = properties.getProperty("password");
-            System.out.println(DRIVER);
-            System.out.println(URL);
-            System.out.println(USERNAME);
-            System.out.println(PASSWORD);
-        } catch (IOException e) {
+            } catch (IOException e) {
             e.printStackTrace();
         }
 

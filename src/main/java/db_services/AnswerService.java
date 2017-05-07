@@ -65,7 +65,7 @@ public class AnswerService implements AnswerDAO {
 //    }
 
     @Override
-    public boolean remove(Answer answer) {
+    public boolean remove(UUID id) {
         Connection connection = Connector.getConnection();
         PreparedStatement preparedStatement = null;
         String sql = "DELETE FROM answers WHERE id = ?";
@@ -73,7 +73,7 @@ public class AnswerService implements AnswerDAO {
             String[] keys = {"question_id"};
 
             preparedStatement = connection.prepareStatement(sql, keys);
-            preparedStatement.setString(1, answer.getId().toString());
+            preparedStatement.setString(1, id.toString());
             preparedStatement.execute();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -95,7 +95,7 @@ public class AnswerService implements AnswerDAO {
     @Override
     public void removeAll(List<Answer> answers) {
         for (Answer answer : answers) {
-            remove(answer);
+            remove(answer.getId());
         }
     }
 

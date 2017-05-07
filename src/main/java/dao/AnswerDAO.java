@@ -10,7 +10,7 @@ public interface AnswerDAO {
 
     boolean add(Question question, Answer answer);
     boolean addAll(Question question, List<Answer> answers);
-    boolean remove(Answer answer);
+    boolean remove(UUID id);
     void removeAll(List<Answer> answers);
     boolean update(Answer newAnswer);
     void updateAll(List<Answer> newAnswers);

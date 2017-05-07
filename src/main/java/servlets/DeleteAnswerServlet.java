@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "EditQuestion", urlPatterns = "/edit")
-public class EditQuestion extends HttpServlet {
+@WebServlet(name = "DeleteAnswerServlet", urlPatterns = "/questions/deleteAnswer")
+public class DeleteAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
