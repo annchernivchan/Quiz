@@ -20,6 +20,7 @@ public class Question {
     private String questionText;
     private List<Answer> allAnswers;
     private QuestionType questionType;
+    private boolean verified;
 
     public Question() {
         this.allAnswers = new ArrayList<>();
@@ -83,6 +84,14 @@ public class Question {
 
     public void setPoint(double point) {
         this.point = point;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public List<Answer> getRightAnswers() {

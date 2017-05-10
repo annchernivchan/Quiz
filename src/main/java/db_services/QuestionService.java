@@ -80,6 +80,7 @@ public class QuestionService implements QuestionDAO {
 
         Connection connection = Connector.getConnection();
         PreparedStatement preparedStatement = null;
+
         String questionTypeSql = "SELECT id FROM question_type WHERE type = ?";
         String sql = "UPDATE questions SET text = ?, point = ?, question_type_id = ?, verified = ? WHERE id = ?";
 
@@ -98,12 +99,19 @@ public class QuestionService implements QuestionDAO {
             preparedStatement.setBoolean(4, isVerified);
             preparedStatement.setString(5, question.getId().toString());
 
-            if (isVerified) {
-                AnswerService answerService = new AnswerService();
-                answerService.updateAll(question.getAllAnswers());
+            preparedStatement.execute();
+
+            AnswerService answerService = new AnswerService();
+            List<Answer> newAnswers = new ArrayList<>();
+            List<Answer> oldAnswers = new ArrayList<>();
+
+            for (Answer answer : question.getAllAnswers()) {
+                if (answerService.getById(answer.getId()) == null) newAnswers.add(answer);
+                else oldAnswers.add(answer);
             }
 
-            preparedStatement.execute();
+            answerService.addAll(question, newAnswers);
+            answerService.updateAll(oldAnswers);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +129,7 @@ public class QuestionService implements QuestionDAO {
 
         Connection connection = Connector.getConnection();
         Statement statement = null;
-        String sql = "SELECT questions.id, text, point, question_type.type FROM questions INNER JOIN question_type ON questions.question_type_id = question_type.id";
+        String sql = "SELECT questions.id, text, point, question_type.type, verified FROM questions INNER JOIN question_type ON questions.question_type_id = question_type.id";
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -131,6 +139,7 @@ public class QuestionService implements QuestionDAO {
                 question.setQuestionText(resultSet.getString("text"));
                 question.setPoint(resultSet.getDouble("point"));
                 question.setQuestionType(QuestionType.valueOf(resultSet.getString("type")));
+                question.setVerified(resultSet.getBoolean("verified"));
                 question.setAllAnswers(answerService.getAllByQuestion(question));
                 questions.add(question);
             }
@@ -149,7 +158,7 @@ public class QuestionService implements QuestionDAO {
 
         Connection connection = Connector.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "SELECT questions.id, text, point, question_type.type FROM questions INNER JOIN question_type ON question_type.id = questions.question_type_id WHERE questions.id = ?";
+        String sql = "SELECT questions.id, text, point, question_type.type, verified FROM questions INNER JOIN question_type ON question_type.id = questions.question_type_id WHERE questions.id = ?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, id.toString());
@@ -160,7 +169,8 @@ public class QuestionService implements QuestionDAO {
                 question.setQuestionText(resultSet.getString("text"));
                 question.setPoint(resultSet.getDouble("point"));
                 question.setQuestionType(QuestionType.valueOf(resultSet.getString("type")));
-                question.setAllAnswers(getAnswersForQuestion(question));
+                question.setVerified(resultSet.getBoolean("verified"));
+                question.setAllAnswers(getAnswersForQuestion(id));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,7 +181,7 @@ public class QuestionService implements QuestionDAO {
     }
 
     @Override
-    public List<Answer> getAnswersForQuestion(Question question) {
+    public List<Answer> getAnswersForQuestion(UUID id) {
         List<Answer> answers = new ArrayList<>();
 
         Connection connection = Connector.getConnection();
@@ -179,7 +189,7 @@ public class QuestionService implements QuestionDAO {
         String sql = "SELECT id, text, weight FROM answers WHERE question_id = ?";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, question.getId().toString());
+            preparedStatement.setString(1, id.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Answer answer = new Answer();
@@ -188,21 +198,25 @@ public class QuestionService implements QuestionDAO {
                 answer.setWeight(resultSet.getDouble("weight"));
                 answers.add(answer);
             }
-            question.setAllAnswers(answers);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
             Connector.close(connection, preparedStatement);
         }
-        return question.getAllAnswers();
+        return answers;
+    }
+
+    @Override
+    public boolean isVerified(UUID id) {
+        QuestionService questionService = new QuestionService();
+        Question question = questionService.getById(id);
+        return question.getAnswersWeight() == 100;
 
     }
 
     @Override
     public boolean verifyQuestion(Question question) {
-        QuestionService questionService = new QuestionService();
-        question.setAllAnswers(questionService.getAnswersForQuestion(question));
 
         boolean isVerified = question.getAnswersWeight() == 100;
         Connection connection = Connector.getConnection();
@@ -241,10 +255,11 @@ public class QuestionService implements QuestionDAO {
 //    }
 
     public List<Answer> getRightAnswers(List<Answer> answers) {
+        List<Answer> rightAnswers = new ArrayList<>();
         for (Answer a : answers) {
-            if (a.isRight()) answers.add(a);
+            if (a.isRight()) rightAnswers.add(a);
         }
-        return answers;
+        return rightAnswers;
     }
 
     public double getAnswersWeight(Question question) {

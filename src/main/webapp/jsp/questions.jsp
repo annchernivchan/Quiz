@@ -11,13 +11,15 @@
     <tr>
         <th align="center">Question</th>
         <th>Point</th>
-        <td></td>
-        <td></td>
+        <th>Verified</th>
+        <th></th>
+        <th></th>
     </tr>
     <c:forEach items="${questions}" var="question">
         <tr valign="top">
             <td>${question.questionText}</td>
             <td>${question.point}</td>
+            <td align="center"><input disabled type="checkbox" name="verified" ${question.verified ? 'checked' : ''}></td>
             <td><a href="${pageContext.servletContext.contextPath}/editQuestion?id=${question.id}">Edit</a></td>
             <td><a href="${pageContext.servletContext.contextPath}/deleteQuestion?id=${question.id}">Delete</a></td>
     </c:forEach>

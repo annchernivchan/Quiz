@@ -14,7 +14,8 @@ public interface QuestionDAO {
     boolean update(Question question);
     List<Question> getAll();
     Question getById(UUID id);
-    List<Answer> getAnswersForQuestion(Question question);
+    List<Answer> getAnswersForQuestion(UUID id);
+    boolean isVerified(UUID id);
     boolean verifyQuestion(Question question);
     List<String> getAllTypes();
 

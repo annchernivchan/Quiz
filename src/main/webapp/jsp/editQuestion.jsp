@@ -4,6 +4,8 @@
 <head>
     <title>Edit question</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css" media="screen"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/addAnswer.js"></script>
 </head>
 <body>
 <h3>
@@ -25,27 +27,38 @@
             <td><p>Question type: </p></td>
             <td><select name="questionType">
                 <c:forEach items="${types}" var="type">
-                    <option ${type.equals(question.questionType.name()) ? 'selected' : ''} value="${type}">${type}</option>
+                    <option ${type.equals(question.questionType.name()) ? 'selected' : ''}
+                            value="${type}">${type}</option>
                 </c:forEach>
             </select></td>
         </tr>
         <tr>
             <td><p>Answers: </p></td>
             <td>
-                <table border="1">
+                <table id="answers" border="1">
                     <tr>
                         <th>Answer</th>
                         <th>Weight</th>
                     </tr>
                     <c:forEach items="${question.allAnswers}" var="answer">
-                    <tr valign="top">
-                        <td><input type="text" value="${answer.answerText}"></td>
-                        <td><input type="text" value="${answer.weight}" id="fieldAnswerWeight"></td>
-                        <td>
-                            <a href="${pageContext.servletContext.contextPath}/questions/deleteAnswer?answerId=${answer.id}&questionId=${question.id}">Delete</a>
-                        </td>
-                        </c:forEach>
+                        <tr valign="top">
+                            <td hidden><input type="text" name="answerId" value="${answer.id}"></td>
+                            <td><input type="text" name="fieldAnswerText" value="${answer.answerText}"></td>
+                            <td><input type="text" name="fieldAnswerWeight" value="${answer.weight}"
+                                       class="fieldAnswerWeight"></td>
+                            <td>
+                                <a href="${pageContext.servletContext.contextPath}/deleteAnswer?answerId=${answer.id}&questionId=${question.id}">Delete</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button id="addAnswer">Add answer</button>
+                <button id="saveAnswers">Save answers</button>
             </td>
         </tr>
         <tr>
