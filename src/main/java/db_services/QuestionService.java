@@ -37,10 +37,10 @@ public class QuestionService implements QuestionDAO {
             preparedStatement.setInt(4, questionTypeId);
             preparedStatement.setBoolean(5, isVerified);
 
-            if (isVerified) {
+//            if (isVerified) {
                 AnswerService answerService = new AnswerService();
                 answerService.addAll(question, question.getAllAnswers());
-            }
+//            }
 
             preparedStatement.execute();
         } catch (SQLException e) {

@@ -30,8 +30,8 @@ public class AnswerValidator {
     }
 
     public static boolean canAddAnswer(Question question, Answer answer) {
-        return isAnswerTextCorrect(answer) && !(answer.isRight() && question.getQuestionType() == QuestionType.ONE_RIGHT_ANSWER && question.getRightAnswers().size() > 0);
-
+//        return isAnswerTextCorrect(answer) && !(answer.isRight() && question.getQuestionType() == QuestionType.ONE_RIGHT_ANSWER && question.getRightAnswers().size() > 0);
+        return true;
     }
 
 }

@@ -58,8 +58,7 @@
             <td></td>
             <td>
                 <button id="addAnswer">Add answer</button>
-                <button id="saveAnswers">Save answers</button>
-            </td>
+                </td>
         </tr>
         <tr>
             <td><input type="submit" value="Save"></td>

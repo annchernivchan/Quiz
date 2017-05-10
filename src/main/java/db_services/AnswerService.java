@@ -18,7 +18,6 @@ public class AnswerService implements AnswerDAO {
 
     @Override
     public boolean add(Question question, Answer answer) {
-//        updateAnswersWeight(question, answer);
         if (AnswerValidator.canAddAnswer(question, answer)) {
             Connection connection = Connector.getConnection();
             PreparedStatement preparedStatement = null;
@@ -174,10 +173,11 @@ public class AnswerService implements AnswerDAO {
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, id.toString());
+
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 answer = new Answer();
-                answer.setId(UUID.fromString(resultSet.getString("id")));
+                answer.setId(id);
                 answer.setAnswerText(resultSet.getString("text"));
                 answer.setWeight(resultSet.getDouble("weight"));
             }
@@ -187,5 +187,9 @@ public class AnswerService implements AnswerDAO {
             Connector.close(connection, preparedStatement);
         }
         return answer;
+    }
+
+    public boolean isDefault(String id){
+        return id.equals("000e0000-e00b-0d0-a000-000000000000");
     }
 }

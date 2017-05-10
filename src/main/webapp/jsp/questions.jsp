@@ -24,6 +24,6 @@
             <td><a href="${pageContext.servletContext.contextPath}/deleteQuestion?id=${question.id}">Delete</a></td>
     </c:forEach>
 </table>
-<input id="addButton" type="button" value="Add question">
+<input id="addButton" type="button" onclick="parent.location='/addQuestion'" value="Add question">
 </body>
 </html>

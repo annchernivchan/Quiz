@@ -17,7 +17,7 @@ public class Answer {
 
 	public Answer(String answerText, double weight) {
 		this.answerText = answerText;
-		if (weight <= 100) this.weight = weight;
+		if (weight <= 100.0) this.weight = weight;
 	}
 
 	public UUID getId() {

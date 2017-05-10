@@ -1,15 +1,11 @@
 package main;
 
-import entities.Question;
-import db_services.QuestionService;
-
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-        QuestionService questionService = new QuestionService();
-        List<Question> questions = questionService.getAll();
-        System.out.println(questions.size());
+        Double d = Double.valueOf("1.1");
+        Double d2 = Double.valueOf("1,1");
+        System.out.println(d);
+        System.out.println(d2);
     }
 
 

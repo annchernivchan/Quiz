@@ -1,5 +1,6 @@
 package servlets;
 
+import db_services.AnswerService;
 import db_services.QuestionService;
 import entities.Answer;
 import entities.Question;
@@ -26,6 +27,7 @@ public class DoEditQuestionServlet extends HttpServlet {
         UUID questionId = UUID.fromString(request.getParameter("id"));
 
         QuestionService questionService = new QuestionService();
+        AnswerService answerService = new AnswerService();
         Question question = questionService.getById(questionId);
 
         question.setQuestionText(request.getParameter("questionText"));
@@ -40,7 +42,7 @@ public class DoEditQuestionServlet extends HttpServlet {
 
         for (int i = 0; i < answerTexts.length; i++) {
             Answer answer = new Answer(answerTexts[i], Double.valueOf(answerWeights[i]));
-            answer.setId(UUID.fromString(answersId[i]));
+            if (!answerService.isDefault(answersId[i])) answer.setId(UUID.fromString(answersId[i]));
             answers.add(answer);
         }
 
