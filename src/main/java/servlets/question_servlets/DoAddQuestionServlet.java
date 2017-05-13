@@ -1,9 +1,10 @@
-package servlets;
+package servlets.question_servlets;
 
 import db_services.QuestionService;
 import entities.Answer;
 import entities.Question;
 import entities.QuestionType;
+import validation.QuestionValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,16 +19,20 @@ import java.util.UUID;
 @WebServlet(name = "DoAddQuestionServlet", urlPatterns = "/doAddQuestion")
 public class DoAddQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         QuestionService questionService = new QuestionService();
+        String questionTextError = null;
+        String questionPointError = null;
 
         Question newQuestion = new Question();
-        newQuestion.setQuestionText(request.getParameter("questionText"));
-        newQuestion.setPoint(Double.valueOf(request.getParameter("questionPoint")));
+
+        String questionText = request.getParameter("questionText");
+        if (QuestionValidator.isQuestionTextCorrect(questionText)) newQuestion.setQuestionText(questionText);
+        else questionTextError = "Question text is incorrect";
+
+        String point = request.getParameter("questionPoint");
+        if (QuestionValidator.isQuestionPointCorrect(point)) newQuestion.setPoint(Double.valueOf(point));
+        else questionPointError = "Question point is incorrect";
+
         newQuestion.setQuestionType(QuestionType.valueOf(request.getParameter("questionType")));
 
         List<Answer> answers = new ArrayList<>();
@@ -42,6 +47,17 @@ public class DoAddQuestionServlet extends HttpServlet {
         newQuestion.setAllAnswers(answers);
         questionService.add(newQuestion);
 
-        response.sendRedirect(request.getContextPath() + "/questions");
+
+        request.setAttribute("questionTextError", questionTextError);
+        request.setAttribute("questionPointError", questionPointError);
+
+        if (questionTextError == null || questionPointError == null) {
+            request.getRequestDispatcher("");
+        } else response.sendRedirect(request.getContextPath() + "/questions");
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

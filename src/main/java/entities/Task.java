@@ -1,26 +1,29 @@
 package entities;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Task {
 
-    private long id;
+    private UUID id = UUID.randomUUID();
     private String name;
     private List<Question> questions;
+    private double totalPoint;
 
     public Task() {
     }
 
-    public Task(String name, List<Question> questions) {
+    public Task(String name, List<Question> questions, double totalPoint) {
         this.name = name;
         this.questions = questions;
+        this.totalPoint = totalPoint;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -38,5 +41,13 @@ public class Task {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public double getTotalPoint() {
+        return totalPoint;
+    }
+
+    public void setTotalPoint(double totalPoint) {
+        this.totalPoint = totalPoint;
     }
 }

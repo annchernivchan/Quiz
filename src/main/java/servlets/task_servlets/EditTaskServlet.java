@@ -1,6 +1,8 @@
-package servlets;
+package servlets.task_servlets;
 
 import db_services.QuestionService;
+import db_services.TaskService;
+import entities.Task;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet(name = "DeleteQuestionServlet", urlPatterns = "/deleteQuestion")
-public class DeleteQuestionServlet extends HttpServlet {
+@WebServlet(name = "EditTaskServlet", urlPatterns = "/editTask")
+public class EditTaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String taskId = request.getParameter("id");
+        TaskService taskService = new TaskService();
         QuestionService questionService = new QuestionService();
-        questionService.remove(UUID.fromString(request.getParameter("id")));
-        response.sendRedirect(request.getContextPath() + "/questions");
+        Task taskById = taskService.getTaskById(UUID.fromString(taskId));
+        request.setAttribute("task", taskById);
+        request.setAttribute("availableQuestions", questionService.getAvailableForTask(UUID.fromString(taskId)));
+        request.getRequestDispatcher("jsp/tasks/editTask.jsp").forward(request, response);
     }
 }

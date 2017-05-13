@@ -1,0 +1,25 @@
+#addButton {
+    margin-top: 20px;
+}
+
+.fieldQuestionPoint {
+    width: 40px;
+}
+
+#fieldQuestionText {
+    width: 300px;
+}
+
+#fieldTaskName {
+    width: 500px;
+}
+
+.fieldAnswerWeight {
+    width: 80px;
+    text-align: center;
+}
+
+.imgIsVerified {
+    width: 20px;
+    height: 20px;
+}

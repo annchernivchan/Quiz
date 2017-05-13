@@ -2,7 +2,6 @@ package validation;
 
 import entities.Answer;
 import entities.Question;
-import entities.QuestionType;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -10,12 +9,6 @@ import java.util.regex.Pattern;
 
 public class AnswerValidator {
 
-    public boolean isAnswersNeedUpdate(Question question, List<Answer> answers, Answer newAnswer) {
-        if (isAnswersWeightCorrect(answers)) {
-            return true;
-        }
-        return false;
-    }
 
     public static boolean isAnswerTextCorrect(Answer answer) {
         Pattern p = Pattern.compile(".{0,100}");

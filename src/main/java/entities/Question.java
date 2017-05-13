@@ -33,14 +33,6 @@ public class Question {
         this.questionType = questionType;
     }
 
-    public Question(String questionText, List<Answer> allAnswers, double point) {
-        if (QuestionValidator.isQuestionTextCorrect(questionText)) this.questionText = questionText;
-        if (AnswerValidator.isAnswersWeightCorrect(allAnswers)) this.allAnswers = allAnswers;
-        this.point = point;
-        if (getRightAnswers(allAnswers).size() == 1) this.questionType = QuestionType.ONE_RIGHT_ANSWER;
-        else this.questionType = QuestionType.MULTI_CHOICE;
-    }
-
     public UUID getId() {
         return id;
     }
@@ -116,24 +108,14 @@ public class Question {
 
         Question question = (Question) o;
 
-        if (Double.compare(question.point, point) != 0) return false;
         if (id != null ? !id.equals(question.id) : question.id != null) return false;
-        if (questionText != null ? !questionText.equals(question.questionText) : question.questionText != null)
-            return false;
-        if (allAnswers != null ? !allAnswers.equals(question.allAnswers) : question.allAnswers != null) return false;
-        return questionType == question.questionType;
+        return questionText != null ? questionText.equals(question.questionText) : question.questionText == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id != null ? id.hashCode() : 0;
-        temp = Double.doubleToLongBits(point);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (questionText != null ? questionText.hashCode() : 0);
-        result = 31 * result + (allAnswers != null ? allAnswers.hashCode() : 0);
-        result = 31 * result + (questionType != null ? questionType.hashCode() : 0);
         return result;
     }
 

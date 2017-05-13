@@ -5,6 +5,7 @@ import db_connection.Connector;
 import entities.Answer;
 import entities.Question;
 import entities.QuestionType;
+import entities.Task;
 import validation.AnswerValidator;
 
 import java.sql.*;
@@ -37,10 +38,8 @@ public class QuestionService implements QuestionDAO {
             preparedStatement.setInt(4, questionTypeId);
             preparedStatement.setBoolean(5, isVerified);
 
-//            if (isVerified) {
-                AnswerService answerService = new AnswerService();
-                answerService.addAll(question, question.getAllAnswers());
-//            }
+            AnswerService answerService = new AnswerService();
+            answerService.addAll(question, question.getAllAnswers());
 
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -153,6 +152,35 @@ public class QuestionService implements QuestionDAO {
     }
 
     @Override
+    public List<Question> getAllVerified() {
+        List<Question> verifiedQuestions = new ArrayList<>();
+        for (Question question : getAll()) {
+            if (question.isVerified()) verifiedQuestions.add(question);
+        }
+        return verifiedQuestions;
+    }
+
+    @Override
+    public List<Question> getAvailableForTask(UUID taskId) {
+        TaskService taskService = new TaskService();
+        Task task = taskService.getTaskById(taskId);
+
+        return getAvailableForTask(task);
+    }
+
+    public List<Question> getAvailableForTask(Task task) {
+        List<Question> availableQuestions = new ArrayList<>();
+
+        for (Question question : getAll()) {
+            if (question.isVerified() && !task.getQuestions().contains(question)) {
+                availableQuestions.add(question);
+            }
+        }
+        return availableQuestions;
+    }
+
+
+    @Override
     public Question getById(UUID id) {
         Question question = null;
 
@@ -241,18 +269,6 @@ public class QuestionService implements QuestionDAO {
             question.getAllAnswers().add(answer);
         }
     }
-
-//    public void recalculateAnswersWeight(Question question, Answer newAnswer) {
-//        double percent = 0;
-//        if (getAnswersWeight(question) == 100) {
-//            percent = newAnswer.getWeight();
-//        } else if (getAnswersWeight(question) + newAnswer.getWeight() >= 100) {
-//            percent = getAnswersWeight(question) + newAnswer.getWeight() - 100;
-//        }
-//        for (Answer answer : question.getAllAnswers()) {
-//            answer.setWeight(answer.getWeight() - (answer.getWeight() * percent) / 100);
-//        }
-//    }
 
     public List<Answer> getRightAnswers(List<Answer> answers) {
         List<Answer> rightAnswers = new ArrayList<>();

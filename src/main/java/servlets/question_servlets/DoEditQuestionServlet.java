@@ -1,4 +1,4 @@
-package servlets;
+package servlets.question_servlets;
 
 import db_services.AnswerService;
 import db_services.QuestionService;
@@ -19,10 +19,6 @@ import java.util.UUID;
 @WebServlet(name = "DoEditQuestionServlet", urlPatterns = "/doEditQuestion")
 public class DoEditQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String errorString = "";
         UUID questionId = UUID.fromString(request.getParameter("id"));
 
@@ -53,5 +49,9 @@ public class DoEditQuestionServlet extends HttpServlet {
         request.setAttribute("question", question);
         request.setAttribute("errorString", errorString);
         response.sendRedirect(request.getContextPath() + "/questions");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

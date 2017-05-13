@@ -2,26 +2,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/styles.css" media="screen"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../js/addAnswer.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/utils.js"></script>
     <title>Add question</title>
 </head>
 <body>
 <h3>
     Adding a question
 </h3>
-<p style="color: red;">${errorString}</p>
-<form action="doAddQuestion" method="post">
+<form id="formSaveQuestion" action="doAddQuestion" method="post">
     <table>
         <tr>
             <td><p>Question text: </p></td>
-            <td><input type="text" name="questionText" value="" maxlength="255"
+            <td><input type="text" name="questionText" value="${question.questionText}" maxlength="255"
                        id="fieldQuestionText"></td>
+            <td><em style="color: red;">${questionTextError}</em></td>
         </tr>
         <tr>
             <td><p>Point: </p></td>
-            <td><input type="text" name="questionPoint" value="" maxlength="6" id="fieldPoint"></td>
+            <td><input type="text" class="fieldQuestionPoint" name="questionPoint" value="${question.questionPoint}"
+                       maxlength="6"></td>
+            <td><em style="color: red;">${questionPointError}</em></td>
         </tr>
         <tr>
             <td><p>Question type: </p></td>
@@ -33,13 +35,8 @@
         </tr>
         <tr>
             <td><p>Answers: </p></td>
-            <td>
-                <table id="answers" border="1">
-                    <tr>
-                        <th>Answer</th>
-                        <th>Weight</th>
-                    </tr>
-                </table>
+            <td id="answersTableTd">
+                <em>No answers</em>
             </td>
         </tr>
         <tr>
@@ -49,8 +46,10 @@
             </td>
         </tr>
         <tr>
-            <td><input type="submit" value="Save"></td>
-            <td><a href="${pageContext.servletContext.contextPath}/questions">Cancel</a></td>
+            <td>
+                <input type="submit" class="saveQuestion" value="Save">
+                <a href="${pageContext.servletContext.contextPath}/questions">Cancel</a>
+            </td>
         </tr>
     </table>
 </form>

@@ -13,6 +13,8 @@ public interface QuestionDAO {
     boolean remove(UUID id);
     boolean update(Question question);
     List<Question> getAll();
+    List<Question> getAllVerified();
+    List<Question> getAvailableForTask(UUID taskId);
     Question getById(UUID id);
     List<Answer> getAnswersForQuestion(UUID id);
     boolean isVerified(UUID id);

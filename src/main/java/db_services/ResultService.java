@@ -26,7 +26,7 @@ public class ResultService implements ResultDAO {
             String sql = "INSERT INTO results (user_id, task_id, score) VALUES (?,?,?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getId().toString());
-            preparedStatement.setLong(2, task.getId());
+            preparedStatement.setString(2, task.getId().toString());
             preparedStatement.setDouble(3, taskResult);
             preparedStatement.execute();
 

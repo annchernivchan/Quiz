@@ -10,4 +10,10 @@ public class QuestionValidator {
         Matcher m = p.matcher(questionText);
         return m.matches();
     }
+
+    public static boolean isQuestionPointCorrect(String questionText) {
+        Pattern p = Pattern.compile("\\d{1,5}\\.\\d{0,2}");
+        Matcher m = p.matcher(questionText);
+        return m.matches();
+    }
 }

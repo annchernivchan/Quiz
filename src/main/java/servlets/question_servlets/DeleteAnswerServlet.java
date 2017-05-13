@@ -1,4 +1,4 @@
-package servlets;
+package servlets.question_servlets;
 
 import db_services.AnswerService;
 import db_services.QuestionService;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @WebServlet(name = "DeleteAnswerServlet", urlPatterns = "/deleteAnswer")
 public class DeleteAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

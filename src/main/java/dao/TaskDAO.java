@@ -4,13 +4,17 @@ import entities.Question;
 import entities.Task;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TaskDAO {
 
-    void createTask(String name);
-    void deleteTask(String name);
-
-    void addQuestion(Task task, Question question);
-    void removeQuestion(Task task, Question question);
-    List<Question> getQuestions(Task task);
+    void createTask(Task task);
+    Task getTaskById(UUID taskId);
+    void deleteTask(UUID taskId);
+    void update(Task task);
+    void addQuestion(UUID taskId, Question question);
+    void removeQuestion(UUID taskId, UUID questionId);
+    List<Question> getQuestions(UUID taskId);
+    List<Task> getAll();
+    boolean isQuestionInTask(UUID taskId, UUID questionId);
 }
