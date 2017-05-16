@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap-select.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/utils.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/questionsUtils.js"></script>
 </head>
 <body>
 <div style="width: 800px" class="container">
     <h3>
         Editing a question
     </h3>
-    <p style="color: red;">${errorString}</p>
-    <form id="formSaveQuestion" action="doEditQuestion?id=${question.id}" method="post">
+
+    <div class="errorContainer">
+    </div>
+    <form class="formQuestion" toUrl="/doEditQuestion">
         <table class="table">
             <tr>
+                <td hidden><input name="id" value="${question.id}"></td>
                 <td><p>Question text: </p></td>
                 <td><input type="text" name="questionText" value="${question.questionText}" maxlength="255"
                            class="fieldQuestionText form-control"></td>

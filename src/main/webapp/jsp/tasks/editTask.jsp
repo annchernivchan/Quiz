@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap-select.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/utils.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/tasksUtils.js"></script>
     <title>Edit task</title>
 </head>
 <body>
@@ -17,10 +16,12 @@
     <h3>
         Editing a task
     </h3>
+    <div class="errorContainer"></div>
     <p style="color: red;">${errorString}</p>
-    <form action="doEditTask?id=${task.id}" method="post">
+    <form class="taskForm">
         <table class="table">
             <tr>
+                <td hidden><input name="taskId" value="${task.id}"></td>
                 <td class="col-sm-3"><p>Task name: </p></td>
                 <td><input type="text" name="taskName" value="${task.name}" maxlength="255"
                            class="fieldTaskName form-control"></td>
@@ -87,7 +88,7 @@
             <tr>
                 <td></td>
                 <td align="right">
-                    <input type="submit" class="btn btn-success" value="Save">
+                    <input type="button" class="btn btn-success saveEditedTaskBtn" value="Save">
                     <a class="btn btn-danger" href="${pageContext.servletContext.contextPath}/tasks">Cancel</a>
                 </td>
             </tr>

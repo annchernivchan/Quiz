@@ -2,6 +2,7 @@ package db_connection;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,13 +18,17 @@ public class Connector {
     static {
         try {
             Properties properties = new Properties();
-            properties.load(new FileInputStream("F:/apache-tomcat-9.0.0.M1/webapps/ROOT/WEB-INF/classes/db.properties"));
-//            properties.load(new FileInputStream(Paths.get("src/main/resources/db.properties").toAbsolutePath().toString()));
+            properties.load(new FileInputStream(Paths.get("C:/Users/User/Desktop/SoftServe/Quiz/src/main/resources/db.properties").toAbsolutePath().toString()));
+
             DRIVER = properties.getProperty("driver");
             URL = properties.getProperty("url");
             USERNAME = properties.getProperty("username");
             PASSWORD = properties.getProperty("password");
-            } catch (IOException e) {
+        } catch (IOException e) {
+            DRIVER = "org.postgresql.Driver";
+            URL = "jdbc:postgresql://localhost:5432/testing";
+            USERNAME = "postgres";
+            PASSWORD = "admin";
             e.printStackTrace();
         }
 

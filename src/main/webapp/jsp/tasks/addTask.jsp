@@ -6,10 +6,8 @@
           media="screen"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="${pageContext.servletContext.contextPath}/resources/css/awesome-bootstrap-checkbox.css">
     <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/utils.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/tasksUtils.js"></script>
     <title>Add task</title>
 </head>
 <body>
@@ -19,7 +17,7 @@
     </h3>
     <div class="errorContainer">
     </div>
-    <form action="doAddTask" method="post">
+    <form class="taskForm">
         <table class="table">
             <tr>
                 <td><p>Task name: </p></td>
@@ -62,7 +60,7 @@
             <tr>
                 <td></td>
                 <td align="right">
-                    <input id="saveTaskBtn" class="btn btn-success" type="submit" value="Save">
+                    <input type="button" class="btn btn-success saveAddedTaskBtn" value="Save">
                     <a class="btn btn-danger" href="${pageContext.servletContext.contextPath}/tasks">Cancel</a>
                 </td>
             </tr>

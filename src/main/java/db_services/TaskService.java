@@ -284,6 +284,7 @@ public class TaskService implements TaskDAO {
 
         for (Task task : tasks) {
             try {
+                connection = Connector.getConnection();
                 String sql = "UPDATE tasks SET total_point = ? WHERE id = ?";
                 preparedStatement = connection.prepareStatement(sql);
                 long totalPoint = 0;

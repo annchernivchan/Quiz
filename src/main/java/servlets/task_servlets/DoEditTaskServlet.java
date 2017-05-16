@@ -4,6 +4,7 @@ import db_services.QuestionService;
 import db_services.TaskService;
 import entities.Question;
 import entities.Task;
+import validation.TaskValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +19,16 @@ import java.util.UUID;
 @WebServlet(name = "DoEditTaskServlet", urlPatterns = "/doEditTask")
 public class DoEditTaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        String id = request.getParameter("taskId");
         TaskService taskService = new TaskService();
+
+        String errorTaskName = null;
+
         QuestionService questionService = new QuestionService();
         Task task = taskService.getTaskById(UUID.fromString(id));
-        task.setName(request.getParameter("taskName"));
+        String taskName = request.getParameter("taskName");
+        if (TaskValidator.isTaskNameCorrect(taskName)) task.setName(taskName);
+        else errorTaskName = " Task name should start with upper letter and be less than 50 characters!";
 
         List<Question> questions = new ArrayList<>();
         String[] questionsInTask = request.getParameterValues("isInTask");
@@ -34,8 +40,14 @@ public class DoEditTaskServlet extends HttpServlet {
         }
         task.setTotalPoint(points);
         task.setQuestions(questions);
-        taskService.update(task);
-        response.sendRedirect(request.getContextPath() + "/tasks");
+
+        if (errorTaskName == null) {
+            taskService.update(task);
+        } else {
+            response.setContentType("text/plain");
+            response.getWriter().write(errorTaskName);
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

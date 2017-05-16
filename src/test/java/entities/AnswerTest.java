@@ -17,7 +17,7 @@ public class AnswerTest {
         answers.add(new Answer("third"));
 
         for (Answer answer : answers) {
-            Assert.assertEquals(AnswerValidator.isAnswerTextCorrect(answer), true);
+            Assert.assertEquals(AnswerValidator.isAnswerTextCorrect(answer.getAnswerText()), true);
         }
     }
 

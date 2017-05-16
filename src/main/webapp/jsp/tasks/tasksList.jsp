@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
     <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/utils.js"></script><title>Tasks List</title>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/tasksUtils.js"></script><title>Tasks List</title>
 </head>
 <body>
 <div class="container" style="width: 600px;">
@@ -23,7 +23,7 @@
         <td class="text-center"><span>${task.name}</span></td>
         <td class="text-center"><span>${task.totalPoint}</span></td>
         <td><a class="btn btn-info" href="${pageContext.servletContext.contextPath}/editTask?id=${task.id}">Edit</a></td>
-        <td><a class="btn btn-danger glyphicon glyphicon-trash" href="${pageContext.servletContext.contextPath}/deleteTask?id=${task.id}"></a></td>
+        <td><a class="deleteTaskLink btn btn-danger glyphicon glyphicon-trash" taskId="${task.id}"></a></td>
         </c:forEach>
 </table>
     <input class="btn btn-success" type="button" onclick="parent.location='/addTask'" value="Add task" >

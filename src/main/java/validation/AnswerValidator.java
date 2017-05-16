@@ -9,10 +9,15 @@ import java.util.regex.Pattern;
 
 public class AnswerValidator {
 
-
-    public static boolean isAnswerTextCorrect(Answer answer) {
+    public static boolean isAnswerTextCorrect(String answer) {
         Pattern p = Pattern.compile(".{0,100}");
-        Matcher m = p.matcher(answer.getAnswerText());
+        Matcher m = p.matcher(answer);
+        return m.matches();
+    }
+
+    public static boolean isAnswerWeightCorrect(String weight) {
+        Pattern p = Pattern.compile("\\d{1,3}((\\.)\\d{0,2})?");
+        Matcher m = p.matcher(weight);
         return m.matches();
     }
 

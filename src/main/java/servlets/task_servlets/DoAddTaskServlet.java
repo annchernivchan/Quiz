@@ -22,9 +22,13 @@ public class DoAddTaskServlet extends HttpServlet {
         QuestionService questionService = new QuestionService();
         TaskService taskService = new TaskService();
 
+        String errorTaskName = null;
         String taskName = request.getParameter("taskName");
         Task task = new Task();
-        task.setName(taskName);
+        if (TaskValidator.isTaskNameCorrect(taskName)) {
+            task.setName(taskName);
+        } else errorTaskName = " Task name should start with upper letter and be less than 50 characters!";
+
         List<Question> questions = new ArrayList<>();
         String[] questionsInTask = request.getParameterValues("isInTask");
         double points = 0;
@@ -35,8 +39,15 @@ public class DoAddTaskServlet extends HttpServlet {
         }
         task.setTotalPoint(points);
         task.setQuestions(questions);
-        taskService.createTask(task);
-        response.sendRedirect(request.getContextPath() + "/tasks");
+        request.setAttribute("errorString", errorTaskName);
+
+        if (errorTaskName == null) {
+            taskService.createTask(task);
+        } else {
+            response.setContentType("text/plain");
+            response.getWriter().write(errorTaskName);
+        }
+
 
     }
 

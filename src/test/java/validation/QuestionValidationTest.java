@@ -7,8 +7,14 @@ public class QuestionValidationTest {
 
     @Test
     public void isQuestionPointCorrect(){
-        String point = "4";
+        String point = "44.55";
         Assert.assertTrue(QuestionValidator.isQuestionPointCorrect(point));
+    }
+
+    @Test
+    public void isQuestionTypeCorrect(){
+        String type = "MULTI_CHOICE";
+        Assert.assertTrue(QuestionValidator.isQuestionTypeCorrect(type));
     }
 
 }

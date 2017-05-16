@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.servletContext.contextPath}/resources/js/utils.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/homePageUtils.js"></script>
     <title>Home</title>
 </head>
 <body>

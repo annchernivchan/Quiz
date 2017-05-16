@@ -19,7 +19,6 @@ import java.util.UUID;
 @WebServlet(name = "DoEditQuestionServlet", urlPatterns = "/doEditQuestion")
 public class DoEditQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String errorString = "";
         UUID questionId = UUID.fromString(request.getParameter("id"));
 
         QuestionService questionService = new QuestionService();
@@ -30,25 +29,23 @@ public class DoEditQuestionServlet extends HttpServlet {
         question.setPoint(Double.valueOf(request.getParameter("questionPoint")));
         question.setQuestionType(QuestionType.valueOf(request.getParameter("questionType")));
 
-        List<Answer> answers = new ArrayList<>();
-
-        String[] answersId = request.getParameterValues("answerId");
-        String[] answerTexts = request.getParameterValues("fieldAnswerText");
-        String[] answerWeights = request.getParameterValues("fieldAnswerWeight");
-
-        for (int i = 0; i < answerTexts.length; i++) {
-            Answer answer = new Answer(answerTexts[i], Double.valueOf(answerWeights[i]));
-            if (!answerService.isDefault(answersId[i])) answer.setId(UUID.fromString(answersId[i]));
-            answers.add(answer);
-        }
-
-        question.setAllAnswers(answers);
+//        List<Answer> answers = new ArrayList<>();
+//
+//        String[] answersId = request.getParameterValues("answerId");
+//        String[] answerTexts = request.getParameterValues("fieldAnswerText");
+//        String[] answerWeights = request.getParameterValues("fieldAnswerWeight");
+//
+//        for (int i = 0; i < answerTexts.length; i++) {
+//            Answer answer = new Answer(answerTexts[i], Double.valueOf(answerWeights[i]));
+//            if (!answerService.isDefault(answersId[i])) answer.setId(UUID.fromString(answersId[i]));
+//            answers.add(answer);
+//        }
+//
+//        question.setAllAnswers(answers);
 
         questionService.update(question);
 
         request.setAttribute("question", question);
-        request.setAttribute("errorString", errorString);
-        response.sendRedirect(request.getContextPath() + "/questions");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
