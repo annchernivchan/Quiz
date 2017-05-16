@@ -1,13 +1,5 @@
-#addButton {
-    margin-top: 20px;
-}
-
 .fieldQuestionPoint {
     width: 40px;
-}
-
-#fieldQuestionText {
-    width: 300px;
 }
 
 #fieldTaskName {
@@ -20,6 +12,6 @@
 }
 
 .imgIsVerified {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
 }

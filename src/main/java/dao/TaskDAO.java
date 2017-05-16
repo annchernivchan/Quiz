@@ -17,4 +17,5 @@ public interface TaskDAO {
     List<Question> getQuestions(UUID taskId);
     List<Task> getAll();
     boolean isQuestionInTask(UUID taskId, UUID questionId);
+    void recalculateTasksPoints();
 }

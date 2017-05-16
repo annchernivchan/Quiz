@@ -275,4 +275,32 @@ public class TaskService implements TaskDAO {
         return false;
     }
 
+    @Override
+    public void recalculateTasksPoints() {
+        List<Task> tasks = getAll();
+
+        Connection connection = Connector.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        for (Task task : tasks) {
+            try {
+                String sql = "UPDATE tasks SET total_point = ? WHERE id = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                long totalPoint = 0;
+                for (Question question : task.getQuestions()) {
+                    totalPoint += question.getPoint();
+                }
+                preparedStatement.setLong(1, totalPoint);
+                preparedStatement.setString(2, task.getId().toString());
+                preparedStatement.execute();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new IllegalArgumentException();
+            } finally {
+                Connector.close(connection, preparedStatement);
+            }
+        }
+
+    }
 }

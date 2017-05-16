@@ -16,10 +16,6 @@ import java.util.UUID;
 @WebServlet(name = "DeleteAnswerServlet", urlPatterns = "/deleteAnswer")
 public class DeleteAnswerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         QuestionService questionService = new QuestionService();
         AnswerService answerService = new AnswerService();
         answerService.remove(UUID.fromString(request.getParameter("answerId")));
@@ -29,6 +25,8 @@ public class DeleteAnswerServlet extends HttpServlet {
 
         Question question = questionService.getById(UUID.fromString(questionId));
         question.getAllAnswers().remove(answerService.getById(UUID.fromString(answerId)));
-        response.sendRedirect(request.getContextPath() + "/editQuestion?id=" + questionId);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }

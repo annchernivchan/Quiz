@@ -11,9 +11,9 @@ public class QuestionValidator {
         return m.matches();
     }
 
-    public static boolean isQuestionPointCorrect(String questionText) {
-        Pattern p = Pattern.compile("\\d{1,5}\\.\\d{0,2}");
-        Matcher m = p.matcher(questionText);
+    public static boolean isQuestionPointCorrect(String questionPoint) {
+        Pattern p = Pattern.compile("\\d{1,5}");
+        Matcher m = p.matcher(questionPoint);
         return m.matches();
     }
 }

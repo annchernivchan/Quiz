@@ -4,6 +4,7 @@ import db_services.QuestionService;
 import db_services.TaskService;
 import entities.Question;
 import entities.Task;
+import validation.TaskValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,8 +36,8 @@ public class DoAddTaskServlet extends HttpServlet {
         task.setTotalPoint(points);
         task.setQuestions(questions);
         taskService.createTask(task);
-
         response.sendRedirect(request.getContextPath() + "/tasks");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

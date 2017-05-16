@@ -4,8 +4,8 @@ import entities.Answer;
 import entities.Question;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import services.db_services.AnswerService;
-import services.db_services.QuestionService;
+import db_services.AnswerService;
+import db_services.QuestionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ public class AnswerServiceTest {
         answers.add(new Answer("February", 20));
         answers.add(new Answer("December", 10));
 
-        int before = questionService.getAnswersForQuestion(question).size();
+        int before = questionService.getAnswersForQuestion(question.getId()).size();
         answerService.addAll(question, answers);
-        int after = questionService.getAnswersForQuestion(question).size();
+        int after = questionService.getAnswersForQuestion(question.getId()).size();
         if (before + answers.size() == after) answerService.removeAll(answers);
         Assert.assertEquals(before + answers.size(), after);
     }
@@ -45,10 +45,10 @@ public class AnswerServiceTest {
 
         Answer answer = new Answer("SUMMER", 10);
 
-        int before = questionService.getAnswersForQuestion(question).size();
+        int before = questionService.getAnswersForQuestion(question.getId()).size();
         answerService.add(question, answer);
-        int after = questionService.getAnswersForQuestion(question).size();
-        if (before + 1 == after) answerService.remove(answer);
+        int after = questionService.getAnswersForQuestion(question.getId()).size();
+        if (before + 1 == after) answerService.remove(answer.getId());
         Assert.assertEquals(before + 1, after);
     }
 
@@ -63,9 +63,9 @@ public class AnswerServiceTest {
         Answer answer = new Answer("WINTER", 16.2);
         answer.setId(UUID.fromString("ca03e4c2-d665-4999-bb88-31135048900b"));
 
-        int before = questionService.getAnswersForQuestion(question).size();
-        answerService.remove(answer);
-        int after = questionService.getAnswersForQuestion(question).size();
+        int before = questionService.getAnswersForQuestion(question.getId()).size();
+        answerService.remove(answer.getId());
+        int after = questionService.getAnswersForQuestion(question.getId()).size();
         answerService.add(question, answer);
         Assert.assertEquals(before, after + 1);
     }
@@ -75,7 +75,7 @@ public class AnswerServiceTest {
     public void removeAnswersTest() {
         QuestionService questionService = new QuestionService();
         List<Question> questions = questionService.getAll();
-        boolean isSuccess = questionService.remove(questions.get(questions.size() - 1));
+        boolean isSuccess = questionService.remove(questions.get(questions.size() - 1).getId());
         questionService.add(questions.get(questions.size() - 1));
         Assert.assertEquals(isSuccess, true);
     }

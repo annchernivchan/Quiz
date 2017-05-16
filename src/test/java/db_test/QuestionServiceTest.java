@@ -5,7 +5,7 @@ import entities.Question;
 import entities.QuestionType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import services.db_services.QuestionService;
+import db_services.QuestionService;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class QuestionServiceTest {
         int oldQuestionSize = questionService.getAll().size();
         questionService.add(question);
         int newQuestionSize = questionService.getAll().size();
-        if (oldQuestionSize + 1 == newQuestionSize) questionService.remove(question);
+        if (oldQuestionSize + 1 == newQuestionSize) questionService.remove(question.getId());
         Assert.assertEquals(newQuestionSize, oldQuestionSize + 1);
     }
 
@@ -34,7 +34,7 @@ public class QuestionServiceTest {
         question.setQuestionType(QuestionType.ONE_RIGHT_ANSWER);
 
         int oldQuestionSize = questionService.getAll().size();
-        questionService.remove(question);
+        questionService.remove(question.getId());
         int newQuestionSize = questionService.getAll().size();
         if (oldQuestionSize - 1 == newQuestionSize) questionService.add(question);
         Assert.assertEquals(newQuestionSize, oldQuestionSize - 1);
@@ -87,7 +87,7 @@ public class QuestionServiceTest {
         question.setPoint(10);
         question.setQuestionType(QuestionType.ONE_RIGHT_ANSWER);
 
-        List<Answer> answers = questionService.getAnswersForQuestion(question);
+        List<Answer> answers = questionService.getAnswersForQuestion(question.getId());
         Assert.assertNotNull(answers);
     }
 

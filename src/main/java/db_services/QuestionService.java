@@ -57,6 +57,7 @@ public class QuestionService implements QuestionDAO {
         PreparedStatement preparedStatement = null;
         String sqlQuestion = "DELETE FROM questions WHERE id = ?";
         String sqlAnswers = "DELETE FROM answers WHERE question_id = ?";
+        String sqlTasks = "DELETE FROM task_questions WHERE question_id = ?";
         try {
             preparedStatement = connection.prepareStatement(sqlQuestion);
             preparedStatement.setString(1, id.toString());
@@ -64,6 +65,11 @@ public class QuestionService implements QuestionDAO {
             preparedStatement = connection.prepareStatement(sqlAnswers);
             preparedStatement.setString(1, id.toString());
             preparedStatement.execute();
+            preparedStatement = connection.prepareStatement(sqlTasks);
+            preparedStatement.setString(1, id.toString());
+            preparedStatement.execute();
+            TaskService taskService = new TaskService();
+            taskService.recalculateTasksPoints();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

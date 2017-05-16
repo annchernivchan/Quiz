@@ -20,19 +20,26 @@ import java.util.UUID;
 public class DoAddQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         QuestionService questionService = new QuestionService();
-        String questionTextError = null;
-        String questionPointError = null;
+//        String questionTextError = null;
+//        String questionPointError = null;
 
         Question newQuestion = new Question();
 
-        String questionText = request.getParameter("questionText");
-        if (QuestionValidator.isQuestionTextCorrect(questionText)) newQuestion.setQuestionText(questionText);
-        else questionTextError = "Question text is incorrect";
-
         String point = request.getParameter("questionPoint");
-        if (QuestionValidator.isQuestionPointCorrect(point)) newQuestion.setPoint(Double.valueOf(point));
-        else questionPointError = "Question point is incorrect";
 
+        String questionText = request.getParameter("questionText");
+//        if (QuestionValidator.isQuestionTextCorrect(questionText))
+            newQuestion.setQuestionText(questionText);
+//        else {
+//            questionTextError = "Question text is incorrect";
+//            System.out.println("Question text is incorrect");
+//        }
+//        if (QuestionValidator.isQuestionPointCorrect(point))
+            newQuestion.setPoint(Double.valueOf(point));
+//        else {
+//            questionPointError = "Question point is incorrect";
+//            System.out.println("Question point is incorrect");
+//        }
         newQuestion.setQuestionType(QuestionType.valueOf(request.getParameter("questionType")));
 
         List<Answer> answers = new ArrayList<>();
@@ -45,15 +52,17 @@ public class DoAddQuestionServlet extends HttpServlet {
         }
 
         newQuestion.setAllAnswers(answers);
-        questionService.add(newQuestion);
 
+        request.setAttribute("question", newQuestion);
+//        request.setAttribute("questionTextError", questionTextError);
+//        request.setAttribute("questionPointError", questionPointError);
 
-        request.setAttribute("questionTextError", questionTextError);
-        request.setAttribute("questionPointError", questionPointError);
-
-        if (questionTextError == null || questionPointError == null) {
-            request.getRequestDispatcher("");
-        } else response.sendRedirect(request.getContextPath() + "/questions");
+//        if (questionTextError != null || questionPointError != null) {
+//            request.getRequestDispatcher("jsp/questions/addQuestion.jsp");
+//        } else {
+            questionService.add(newQuestion);
+            response.sendRedirect(request.getContextPath() + "/questions");
+//        }
 
     }
 
