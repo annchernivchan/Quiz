@@ -27,11 +27,7 @@ public class QuestionServiceTest {
     public void removeQuestionTest() {
         QuestionService questionService = new QuestionService();
 
-        Question question = new Question();
-        question.setId(UUID.fromString("dbabd6d0-4e37-4abc-9892-7449ac428201"));
-        question.setQuestionText("What is the capital of Great Britain?");
-        question.setPoint(10);
-        question.setQuestionType(QuestionType.ONE_RIGHT_ANSWER);
+        Question question = questionService.getById(UUID.fromString("b2b4ae3e-fbd1-4db4-b399-1b7560efbb1e"));
 
         int oldQuestionSize = questionService.getAll().size();
         questionService.remove(question.getId());
@@ -44,14 +40,10 @@ public class QuestionServiceTest {
     public void updateQuestionTest() {
         QuestionService questionService = new QuestionService();
 
-        Question oldQuestion = new Question();
-        oldQuestion.setId(UUID.fromString("dbabd6d0-4e37-4abc-9892-7449ac428201"));
-        oldQuestion.setQuestionText("What is the capital of Great Britain?");
-        oldQuestion.setPoint(10);
-        oldQuestion.setQuestionType(QuestionType.ONE_RIGHT_ANSWER);
+        Question oldQuestion = questionService.getById(UUID.fromString("b2b4ae3e-fbd1-4db4-b399-1b7560efbb1e"));
 
         Question newQuestion = new Question();
-        newQuestion.setId(UUID.fromString("dbabd6d0-4e37-4abc-9892-7449ac428201"));
+        newQuestion.setId(UUID.fromString("b2b4ae3e-fbd1-4db4-b399-1b7560efbb1e"));
         newQuestion.setQuestionText("Hello, it's new question");
         newQuestion.setPoint(10);
         newQuestion.setQuestionType(QuestionType.MULTI_CHOICE);
@@ -73,7 +65,7 @@ public class QuestionServiceTest {
     @Test
     public void getQuestionByIdTest() {
         QuestionService questionService = new QuestionService();
-        Question question = questionService.getById(UUID.fromString("dbabd6d0-4e37-4abc-9892-7449ac428201"));
+        Question question = questionService.getById(UUID.fromString("b2b4ae3e-fbd1-4db4-b399-1b7560efbb1e"));
         Assert.assertNotNull(question);
     }
 
@@ -81,11 +73,7 @@ public class QuestionServiceTest {
     public void getAnswersForQuestionTest() {
         QuestionService questionService = new QuestionService();
 
-        Question question = new Question();
-        question.setId(UUID.fromString("dbabd6d0-4e37-4abc-9892-7449ac428201"));
-        question.setQuestionText("What is the capital of Great Britain?");
-        question.setPoint(10);
-        question.setQuestionType(QuestionType.ONE_RIGHT_ANSWER);
+        Question question = questionService.getById(UUID.fromString("b2b4ae3e-fbd1-4db4-b399-1b7560efbb1e"));
 
         List<Answer> answers = questionService.getAnswersForQuestion(question.getId());
         Assert.assertNotNull(answers);

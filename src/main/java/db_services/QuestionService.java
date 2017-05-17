@@ -6,6 +6,7 @@ import entities.Answer;
 import entities.Question;
 import entities.QuestionType;
 import entities.Task;
+import javafx.scene.image.Image;
 import validation.AnswerValidator;
 
 import java.sql.*;
@@ -13,7 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The {@code QuestionService} class represents user interaction with questions table in database.
+*/
+
 public class QuestionService implements QuestionDAO {
+
+    /** Method represents adding entity {@code Question} into the database
+     * @return is operation success
+     * */
 
     @Override
     public boolean add(Question question) {
@@ -51,6 +60,10 @@ public class QuestionService implements QuestionDAO {
         return true;
     }
 
+    /** Method represents removing entity {@code Question} from the database
+     * @return is operation success
+     * */
+
     @Override
     public boolean remove(UUID id) {
         Connection connection = Connector.getConnection();
@@ -78,6 +91,10 @@ public class QuestionService implements QuestionDAO {
         }
         return true;
     }
+
+    /** Method represents updating entity {@code Question} in the database
+     * @return is operation success
+     * */
 
     @Override
     public boolean update(Question question) {
@@ -127,6 +144,10 @@ public class QuestionService implements QuestionDAO {
         return true;
     }
 
+    /** Method represents getting list of entity {@code Question} from the database
+     * @return list of entities
+     * */
+
     @Override
     public List<Question> getAll() {
         AnswerService answerService = new AnswerService();
@@ -157,6 +178,10 @@ public class QuestionService implements QuestionDAO {
         return questions;
     }
 
+    /** Method represents getting all verified entity {@code Question} from the database
+     * @return list of entities
+     * */
+
     @Override
     public List<Question> getAllVerified() {
         List<Question> verifiedQuestions = new ArrayList<>();
@@ -165,6 +190,10 @@ public class QuestionService implements QuestionDAO {
         }
         return verifiedQuestions;
     }
+
+    /** Method represents getting all available entity {@code Question} from the database
+     * @return list of entities
+     * */
 
     @Override
     public List<Question> getAvailableForTask(UUID taskId) {
