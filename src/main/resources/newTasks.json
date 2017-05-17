@@ -1,0 +1,79 @@
+[ {
+  "id" : "63139982-c1c2-444c-a00f-8e8068b27f61",
+  "name" : "OneTask",
+  "questions" : [ {
+    "id" : "b2b4ae3e-fbd1-4db4-b399-1b7560efbb1e",
+    "point" : 10.0,
+    "questionText" : "What is the name of the method used to start a thread execution?",
+    "allAnswers" : [ {
+      "id" : "3cb6db86-1717-4312-bd11-7ac56b1d5d76",
+      "answerText" : "init();",
+      "weight" : 0.0,
+      "right" : false
+    }, {
+      "id" : "14b87b0a-9089-4ce9-b2d7-244f81469661",
+      "answerText" : "start();",
+      "weight" : 0.0,
+      "right" : false
+    }, {
+      "id" : "598326d8-e5c4-4ce5-9a35-ae29ec085912",
+      "answerText" : "run();",
+      "weight" : 100.0,
+      "right" : true
+    }, {
+      "id" : "5ce1e374-1d59-4066-8148-3319100e91fb",
+      "answerText" : "resume();",
+      "weight" : 0.0,
+      "right" : false
+    } ],
+    "questionType" : "ONE_RIGHT_ANSWER",
+    "verified" : false,
+    "answersWeight" : 100.0,
+    "rightAnswers" : [ {
+      "id" : "598326d8-e5c4-4ce5-9a35-ae29ec085912",
+      "answerText" : "run();",
+      "weight" : 100.0,
+      "right" : true
+    } ]
+  } ],
+  "totalPoint" : 10.0
+}, {
+  "id" : "6c683049-9593-4567-b7d2-50db1baf4121",
+  "name" : "TwoTask",
+  "questions" : [ {
+    "id" : "5b66c2c3-9b89-4f3a-aa62-ed04c0a6e3ed",
+    "point" : 10.0,
+    "questionText" : "Which of the following line of code is suitable to start a thread ?",
+    "allAnswers" : [ {
+      "id" : "d45c78e3-48fa-4796-991d-4e4e32e762d7",
+      "answerText" : "Thread t = new Thread(X);",
+      "weight" : 0.0,
+      "right" : false
+    }, {
+      "id" : "ea346ad1-fc73-4117-8030-4ae6e6c5e7df",
+      "answerText" : "Thread t = new Thread(X); t.start();",
+      "weight" : 0.0,
+      "right" : false
+    }, {
+      "id" : "73e7a4d1-0304-485e-8a54-aa8655fedaf3",
+      "answerText" : "X run = new X(); Thread t = new Thread(run); t.start();",
+      "weight" : 100.0,
+      "right" : true
+    }, {
+      "id" : "a42de9e9-7776-449a-84d0-f4d4bb4f9669",
+      "answerText" : "Thread t = new Thread(); x.run();",
+      "weight" : 0.0,
+      "right" : false
+    } ],
+    "questionType" : "ONE_RIGHT_ANSWER",
+    "verified" : false,
+    "answersWeight" : 100.0,
+    "rightAnswers" : [ {
+      "id" : "73e7a4d1-0304-485e-8a54-aa8655fedaf3",
+      "answerText" : "X run = new X(); Thread t = new Thread(run); t.start();",
+      "weight" : 100.0,
+      "right" : true
+    } ]
+  } ],
+  "totalPoint" : 10.0
+} ]

@@ -50,4 +50,5 @@ public class Task {
     public void setTotalPoint(double totalPoint) {
         this.totalPoint = totalPoint;
     }
+
 }

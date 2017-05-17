@@ -11,7 +11,7 @@
     <script src="${pageContext.servletContext.contextPath}/resources/js/questionsUtils.js"></script>
 </head>
 <body>
-<div style="width: 800px" class="container">
+<div style="width: 900px" class="container">
     <h3 style="text-align: center">Questions List</h3>
 
     <c:if test="${questions.size() == 0}">

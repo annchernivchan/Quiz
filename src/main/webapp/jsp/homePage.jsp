@@ -12,9 +12,16 @@
 <body>
 <div class="container">
     <h3 class="text-center">Welcome to QuizMaker!</h3>
+    <div style="margin-bottom: 10px" align="center">
+        <button class="btn btn-success" id="initDatabase">Init database</button>
+        <input style="visibility: hidden" type="file" name="questionsFile" id="questionsFile"
+               accept="application/json">
+        <button class="btn btn-success" id="loadQuestions" type="submit">Load questions</button>
+        <button class="btn btn-success" id="loadTasks">Load tasks</button>
+    </div>
     <div align="center">
-     <button class="btn btn-info" id="showQuestionBtn">Show all questions</button>
-        <button style="margin-left: 10px" class="btn btn-info" id="showTasksBtn">Show all tasks</button>
+        <button class="btn btn-info" id="showQuestionBtn">Show all questions</button>
+        <button class="btn btn-info" id="showTasksBtn">Show all tasks</button>
     </div>
 </div>
 </body>
